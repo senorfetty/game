@@ -14,7 +14,7 @@ h1 {
     grid-template-columns: repeat(3, 100px);
     grid-gap: 5px;
     margin-top: 20px;
-    margin-left: 0;
+    margin-left: 20%;
 }
 
 .row {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)file:///C:/Users/billy/game/game.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Let the Game Begin_files/game.css" type="text/css">
+    <title>Let the Game Begin</title>
+
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <div id="instructions">
+        <h2>How to Play Tic-Tac-Toe</h2>
+        <ol>
+            <li>Players take turns placing their symbol in an empty cell on the board.</li>
+            <li>The game starts with an empty board.</li>
+            <li>One player uses "X," and the other player uses "O."</li>
+            <li>A player wins the game if they get three of their symbols in a row in any direction</li>
+        </ol>        
+    </div>
+
+    <audio id="bg-music" src="game.wav" loop=""></audio>
+    <div class="row">
+        <div class="col">
+            <div class="board" id="board">
+                <div class="cell" onclick="makeMove(0, 0, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(0, 1, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(0, 2, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(1, 0, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(1, 1, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(1, 2, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(2, 0, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(2, 1, &#39;X&#39;)"></div>
+                <div class="cell" onclick="makeMove(2, 2, &#39;X&#39;)"></div>
+            </div>
+        </div>
+        <div class="col">
+            <ul>
+                <li>Win = 2points</li>
+                <li>Tie = 1point</li>
+                <li>Loss = 0 points</li>
+            </ul>
+            <h3 id="pscore">YOU: </h3>
+            <h3 id="ascore">AI: </h3>
+            <p id="result"></p>
+        </div>
+    </div>
+        
+    <audio id="popsound" src="popo.wav"></audio>
+    
+    <audio id="clap" src="clap.wav"></audio>
+    <div id="balloon-container"></div>
+    <br>
+    <button onclick="resetGame()">Restart</button>
+
+
+    <footer class="footer-container white-text-container text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col">        
+              <p class="text-secondary mb-0">© <a class="text-light fw-bold" href="file:///C:/Users/billy/game/game.html#"><span id="currentYear">2024</span></a>.  All Rights Reserved. Senor Fetty</p>
+            </div>
+        </div>
+      </div></footer>
+    <script src="./Let the Game Begin_files/game.js.download"></script>
+
+</body></html>
