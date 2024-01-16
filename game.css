@@ -61,9 +61,11 @@ ul li {
 
 #result {
     margin-top: 20px;
-    font-size: 25px;
+    font-size: larger;
     color: #000000;
     background-color: rgb(255, 255, 255);
+    text-align: center;
+    font-weight: bolder;
 }
 
 #result.show {
@@ -132,4 +134,9 @@ button:hover {
 footer {
     background-color: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
+}
+
+h3 {
+    text-align: center;
+    font-size: larger;
 }

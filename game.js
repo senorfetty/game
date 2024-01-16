@@ -219,7 +219,7 @@ function minimax(board, depth, isMaximizing) {
 
 function updateScores() {
     requestAnimationFrame (() => {
-        document.getElementById('pscore').innerHTML = `Player: ${pScore}`;
+        document.getElementById('pscore').innerHTML = `YOU: ${pScore}`;
         document.getElementById('ascore').innerHTML = `AI: ${aScore}`;
     });
     
