@@ -19,10 +19,10 @@
     </div>
     <br>
 
-    <!-- <label for="radio">
+    <label for="radio" onclick="resetGame()">
         <input type="radio"  name="difficulty" value="easy" checked>EASY
-        <input type="radio"  name="difficulty" value="Difficult">DIFFICULT
-    </label> -->
+        <input type="radio"  name="difficulty" value="difficult">DIFFICULT
+    </label>
 
     <audio id="bg-music" src="game.wav"></audio>
     <div class="row">
@@ -47,6 +47,7 @@
     </ul>
     <h2 id="pscore">YOU: </h2>
     <h2 id="ascore">AI: </h2>
+       
     <p id="result"></p>
     <button onclick="resetGame()">Restart</button>
         

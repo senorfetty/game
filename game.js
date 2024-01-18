@@ -7,6 +7,7 @@ let board = [
 
 let playerTurn = true;
 let gameActive = true;
+let difficulty = 'easy';
 let pScore= 0
 let aScore= 0
 
@@ -18,7 +19,7 @@ function popo() {
 function clap() {
     document.getElementById('clap').play()
 }
-function makeMove(row, col, symbol, difficulty) {
+function makeMove(row, col, symbol) {
     if (!gameActive || board[row][col] !== '' || (symbol === 'X' && !playerTurn) || (symbol === 'O' && playerTurn)) {
         return;
     }
@@ -26,13 +27,6 @@ function makeMove(row, col, symbol, difficulty) {
     board[row][col] = symbol;
     document.getElementById('board').children[row * 3 + col].innerHTML = symbol;
     
-    // if (symbol === 'O'){
-    //     if (difficulty === 'easy') {
-    //         randomAIMove();
-    //     } else if (difficulty === 'difficult') {
-    //         makeAIMove();
-    //     }
-    // }
 
     if (checkWin()) {
         clap();
@@ -58,16 +52,6 @@ function makeMove(row, col, symbol, difficulty) {
     } else {
         popo();
         playerTurn = !playerTurn; 
-
-        // if (!playerTurn) {
-        //     setTimeout(() => {
-        //         if (difficulty === 'difficult') {
-        //             makeAIMove();
-        //         } else if (difficulty === 'easy') {
-        //             randomAIMove();
-        //         }
-        //     }, 500);
-        // } 
 
         if (!playerTurn) {
             setTimeout (() => {
@@ -180,58 +164,70 @@ function getRandomColor() {
     return color;
 }
 
-
-// function randomAIMove() {
-//     if (!gameActive) {
-//         return;
-//     }
-
-//     const emptyCells = [];
-//     for (i = 0; i < 3; i++) {
-//         for (j=0;j<3;j++) {
-//             if (board[i][j] === '') {
-//             emptyCells.push({row:i, col:j})
-//             }
-//         }
-//     }
-
-//     if (emptyCells.length > 0) {
-//         const randomPos = Math.floor(Math.random()*emptyCells.length);
-//         const {row,col} = emptyCells[randomPos];
-//         makeMove(row,col, 'O')
-
-//     }
-// }
-
 function makeAIMove() {
     if (!gameActive) {
-        return;
+      return;
     }
-    
-    const bestMove = findBestMove();
-    const { row, col } = bestMove;
-    makeMove(row, col, 'O');
-}
 
-function findBestMove() {
+    const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+  
+    if (difficulty === 'easy') { 
+      const emptyCells = [];
+      for (let i=0;i<3;i++) {
+          for (j=0;j<3;j++) {
+              if (board[i][j]==='') {
+                  emptyCells.push({row:i,col:j});
+              }
+          }
+      }
+  
+      if (emptyCells.length > 0) {
+          const randomPos = Math.floor(Math.random() * emptyCells.length);
+          const { row, col } = emptyCells[randomPos];
+          makeMove(row, col,'O');
+      }
+    } else {
+      const bestMove = findBestMove();
+      const { row, col } = bestMove;
+      makeMove(row, col, 'O');
+    }
+  }
+
+  function findBestMove() {
     let bestMove = { score: -Infinity };
-    
+    if (difficulty === 'difficult') {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') {
+                    board[i][j] = 'X';
+                    const score = minimax(board, 0, true);
+                    board[i][j] = '';
+  
+                    if (score === 1) {
+                        bestMove = { score: -1, row: i, col: j };
+                        break;
+                    }
+                }
+            }
+        }
+    }
+  
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             if (board[i][j] === '') {
                 board[i][j] = 'O';
                 const score = minimax(board, 0, false);
-                board[i][j] = ''; 
-
+                board[i][j] = '';
+  
                 if (score > bestMove.score) {
                     bestMove = { score, row: i, col: j };
                 }
             }
         }
     }
-
+  
     return bestMove;
-}
+  }
 
 function minimax(board, depth, isMaximizing) {
     if (checkWin()) {
@@ -279,22 +275,10 @@ function startGame() {
     const rR = Math.floor(Math.random() * 3);
     const rC = Math.floor(Math.random() * 3);
 
-    // const difficultychosen = getSelectedDifficulty();
+    const diff = document.querySelector('input[name="difficulty"]:checked').value;
 
-    makeMove(rR,rC, 'O');
+
+    makeMove(rR,rC, 'O', diff);
 }
 
 startGame();
-
-// function getSelectedDifficulty() {
-//     const diffRadio = document.getElementsByName('difficulty');
-
-//     for (const diff of diffRadio) {
-//         if (diff.checked) {
-//             return diff.value;
-//         }
-//     }
-
-//     return 'easy';
-
-// }

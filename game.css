@@ -116,6 +116,19 @@ button:hover {
     margin-bottom: 10px;
 }
 
+ul {
+    display: inline;
+}
+
+#pscore, #ascore {
+    display: inline;
+    color: #000000;
+    margin: 0 15px;
+    padding: 10px;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
 .balloon {
     width: 70px;
     height: 80px;
