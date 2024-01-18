@@ -18,13 +18,21 @@ function popo() {
 function clap() {
     document.getElementById('clap').play()
 }
-function makeMove(row, col, symbol) {
+function makeMove(row, col, symbol, difficulty) {
     if (!gameActive || board[row][col] !== '' || (symbol === 'X' && !playerTurn) || (symbol === 'O' && playerTurn)) {
         return;
     }
 
     board[row][col] = symbol;
     document.getElementById('board').children[row * 3 + col].innerHTML = symbol;
+    
+    // if (symbol === 'O'){
+    //     if (difficulty === 'easy') {
+    //         randomAIMove();
+    //     } else if (difficulty === 'difficult') {
+    //         makeAIMove();
+    //     }
+    // }
 
     if (checkWin()) {
         clap();
@@ -49,10 +57,20 @@ function makeMove(row, col, symbol) {
         updateScores();
     } else {
         popo();
-        playerTurn = !playerTurn;
+        playerTurn = !playerTurn; 
+
+        // if (!playerTurn) {
+        //     setTimeout(() => {
+        //         if (difficulty === 'difficult') {
+        //             makeAIMove();
+        //         } else if (difficulty === 'easy') {
+        //             randomAIMove();
+        //         }
+        //     }, 500);
+        // } 
 
         if (!playerTurn) {
-            setTimeout(() => {
+            setTimeout (() => {
                 makeAIMove();
             }, 500);
         }
@@ -97,7 +115,8 @@ function resetGame() {
         ['', '', ''],
         ['', '', ''],
     ];
-    playerTurn = true;
+
+    playerTurn = false;
     gameActive = true;
 
     const cells= document.querySelectorAll('.cell');
@@ -108,6 +127,11 @@ function resetGame() {
 
     document.getElementById('result').innerHTML = '';
     document.getElementById('result').classList.remove('show');
+
+    const rR = Math.floor(Math.random() * 3);
+    const rC = Math.floor(Math.random() * 3);
+
+    makeMove(rR,rC, 'O');
 }
 
 
@@ -130,7 +154,6 @@ function popBalloon(numBalloons) {
 
         const balloonColor = getRandomColor();
         balloon.style.backgroundColor = balloonColor;
-
   
         const xPosition = Math.floor(Math.random() * window.innerWidth);
         const yPosition = window.innerHeight;
@@ -157,6 +180,28 @@ function getRandomColor() {
     return color;
 }
 
+
+// function randomAIMove() {
+//     if (!gameActive) {
+//         return;
+//     }
+
+//     const emptyCells = [];
+//     for (i = 0; i < 3; i++) {
+//         for (j=0;j<3;j++) {
+//             if (board[i][j] === '') {
+//             emptyCells.push({row:i, col:j})
+//             }
+//         }
+//     }
+
+//     if (emptyCells.length > 0) {
+//         const randomPos = Math.floor(Math.random()*emptyCells.length);
+//         const {row,col} = emptyCells[randomPos];
+//         makeMove(row,col, 'O')
+
+//     }
+// }
 
 function makeAIMove() {
     if (!gameActive) {
@@ -227,3 +272,29 @@ function updateScores() {
 
 
 document.getElementById('currentYear').innerHTML = new Date().getFullYear()
+
+function startGame() {
+    playerTurn= false;
+
+    const rR = Math.floor(Math.random() * 3);
+    const rC = Math.floor(Math.random() * 3);
+
+    // const difficultychosen = getSelectedDifficulty();
+
+    makeMove(rR,rC, 'O');
+}
+
+startGame();
+
+// function getSelectedDifficulty() {
+//     const diffRadio = document.getElementsByName('difficulty');
+
+//     for (const diff of diffRadio) {
+//         if (diff.checked) {
+//             return diff.value;
+//         }
+//     }
+
+//     return 'easy';
+
+// }

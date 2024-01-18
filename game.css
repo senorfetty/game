@@ -1,6 +1,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f0f0;
+    background: #ffffff url('bac.webp');
+    background-color: #ecf0f1;
     margin: 0;
     text-align: center;
 }
@@ -29,21 +30,25 @@ h1 {
     flex-direction: column;
     align-items: center;
 }
+
 .cell {
     width: 100px;
     height: 100px;
     font-size: 24px;
-    border: 2px solid #333;
+    border: 2px solid #3498db;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(45, 42, 42, 0.254);
-    color: #000000;
+    background-color: #3498db;
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 #pscore, #ascore {
     margin-top: 10px;
+    color: #3498db;
+    font-weight: bold;
 }
 
 ul {
@@ -54,26 +59,24 @@ ul {
 ul li {
     margin-bottom: 10px;
 }
+
 .cell:hover {
-    background-color: #3498db;
-    color: #fff;
+    background-color: #2980b9;
 }
 
 #result {
     margin-top: 20px;
     font-size: larger;
-    color: #000000;
-    background-color: rgb(255, 255, 255);
+    color: #333;
+    background-color: #ecf0f1;
     text-align: center;
-    font-weight: bolder;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 #result.show {
     opacity: 1;
-}
-
-.cell:nth-child(3n+1) {
-    margin-right: 0;
 }
 
 #result:contains('tie') {
@@ -88,6 +91,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
@@ -95,9 +99,7 @@ button:hover {
 }
 
 #instructions {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #ecf0f1;
+    background: #ffffff url('bac.webp');
     border: 1px solid #bdc3c7;
     border-radius: 5px;
     text-align: center;
@@ -114,14 +116,13 @@ button:hover {
     margin-bottom: 10px;
 }
 
-
 .balloon {
     width: 70px;
     height: 80px;
     background-color: #f00;
     border-radius: 50%;
     position: absolute;
-    animation: floatUp 6s linear; 
+    animation: floatUp 6s linear;
 }
 
 @keyframes floatUp {
@@ -132,11 +133,16 @@ button:hover {
 }
 
 footer {
-    background-color: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
+    background-color: #050303;
+    color: #fff;
 }
 
 h3 {
     text-align: center;
     font-size: larger;
+}
+
+.cell i {
+    font-size: 2em;
+    color: #333;
 }
