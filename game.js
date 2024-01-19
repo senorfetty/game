@@ -31,6 +31,7 @@ function makeMove(row, col, symbol) {
     if (checkWin()) {
         clap();
         popBalloon(10);
+        highlightWin();
         document.getElementById('result').innerHTML = `Player ${symbol} wins!`;
         gameActive = false;
 
@@ -106,7 +107,7 @@ function resetGame() {
     const cells= document.querySelectorAll('.cell');
     cells.forEach(cell => {
         cell.innerHTML= '';
-        cell.classList.remove('move');
+        cell.classList.remove('move','winning-cell');
     });
 
     document.getElementById('result').innerHTML = '';
@@ -269,6 +270,7 @@ function updateScores() {
 
 document.getElementById('currentYear').innerHTML = new Date().getFullYear()
 
+
 function startGame() {
     playerTurn= false;
 
@@ -282,3 +284,51 @@ function startGame() {
 }
 
 startGame();
+
+function highlightCell(row,col) {
+    const cellInd = row * 3 + col;
+    document.getElementById('board').children[cellInd].classList.add('winning-cell', 'disable-hover');
+}
+function highlightWin() {
+    for (let i=0;i<3;i++) {
+        if (board[i][0] != '' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+            highlightCell(i,0);
+            highlightCell(i,1);
+            highlightCell(i,2);
+            return;
+        }
+        if (board[0][i] != '' && board[0][i] === board[1][i] && board[1][i] === board [2][i]) {
+            highlightCell(0,i);
+            highlightCell(1,i);
+            highlightCell(2,i);
+            return;
+        }
+    }
+
+    if (board[0][0] != '' && board[0][0] === board[1][1] && board [1][1] === board[2][2] ){
+        highlightCell(0,0);
+        highlightCell(1,1);
+        highlightCell(2,2);
+        return;
+    }
+
+    if (board[0][2] != '' && board[0][2] === board[1][1] && board [1][1] === board[2][0] ){
+        highlightCell(0,2);
+        highlightCell(1,1);
+        highlightCell(2,0);
+        return;
+    }
+    handDiff()
+}
+
+const diffRadio = document.querySelector('input[name="difficulty"]');
+diffRadio.addEventListener('change' , handDiff);
+
+function handDiff() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach((cell)=> {
+        cell.classList.remove('winning-cell');
+    });
+}
+
+

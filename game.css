@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #ffffff url('bac.webp');
+    background: #ffffff url('dab.webp');
     background-color: #ecf0f1;
     margin: 0;
     text-align: center;
@@ -35,19 +35,21 @@ h1 {
     width: 100px;
     height: 100px;
     font-size: 24px;
-    border: 2px solid #3498db;
+    border: 3px solid #3498db;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #3498db;
+    box-sizing: border-box;
     color: #fff;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    border-radius: 15px;
 }
 
 #pscore, #ascore {
     margin-top: 10px;
-    color: #3498db;
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -61,14 +63,13 @@ ul li {
 }
 
 .cell:hover {
-    background-color: #2980b9;
+    background-color: #316f98;
 }
 
 #result {
     margin-top: 20px;
     font-size: larger;
-    color: #333;
-    background-color: #ecf0f1;
+    color: #ffffff;
     text-align: center;
     font-weight: bold;
     padding: 10px;
@@ -94,25 +95,24 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+button:hover:not(.disable-hover) {
     background-color: #2980b9;
 }
 
 #instructions {
-    background: #ffffff url('bac.webp');
-    border: 1px solid #bdc3c7;
+    border: 1px solid #bcc2c5;
     border-radius: 5px;
     text-align: center;
 }
 
 #instructions h2 {
-    color: #3498db;
+    color: #ffffff;
 }
 
-#instructions p {
+#instructions p, li {
     font-size: 16px;
     line-height: 1.5;
-    color: #555;
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
@@ -122,7 +122,7 @@ ul {
 
 #pscore, #ascore {
     display: inline;
-    color: #000000;
+    color: #ffffff;
     margin: 0 15px;
     padding: 10px;
     font-size: 24px;
@@ -146,7 +146,6 @@ ul {
 }
 
 footer {
-    background-color: #050303;
     color: #fff;
 }
 
@@ -158,4 +157,22 @@ h3 {
 .cell i {
     font-size: 2em;
     color: #333;
+}
+
+.winning-cell {
+    background-color: #e74c3c;
+    transition: background-color 0.5s ease-in-out;
+    border-color: #c0392b;
+}
+
+.winning-cell:hover {
+    background-color: rgb(0, 0, 0); 
+}
+
+label {
+    color: white;
+}
+
+a {
+    color: white;
 }
