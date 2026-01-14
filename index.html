@@ -5,66 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="game.css" type="text/css">
     <title>Let the Game Begin</title>
-
 </head>
 <body>
-    <h1>Tic-Tac-Toe</h1>
-    <div id="instructions">
-        <h2>How to Play Tic-Tac-Toe</h2>
-        <ol>
-            <li>Players take turns placing their symbol in an empty cell on the board.</li>
-            <li>One player uses "X," and the other player uses "O."</li>
-            <li>A player wins the game if they get three of their symbols in a row in any direction</li>
-        </ol>        
-    </div>
-    <br>
+    <div class="container">
+        <h1>Tic-Tac-Toe</h1>
+        
+        <div class="game-wrapper">
+            <div class="game-main">
+                <div class="board-container">
+                    <div class="difficulty-section">
+                        <label for="radio" onclick="resetGame()">
+                            <div class="difficulty-option">
+                                <input type="radio" name="difficulty" value="easy" checked>
+                                <span>EASY</span>
+                            </div>
+                            <div class="difficulty-option">
+                                <input type="radio" name="difficulty" value="difficult">
+                                <span>DIFFICULT</span>
+                            </div>
+                        </label>
+                    </div>
 
-    <label for="radio" onclick="resetGame()">
-        <input type="radio"  name="difficulty" value="easy" checked>EASY
-        <input type="radio"  name="difficulty" value="difficult">DIFFICULT
-    </label>
+                    <div id="turn-indicator" class="turn-indicator"></div>
 
-    <audio id="bg-music" src="game.wav"></audio>
-    <div class="row">
-        <div class="col">
-            <div class="board" id="board">
-                <div class="cell" onclick="makeMove(0, 0, 'X')"></div>
-                <div class="cell" onclick="makeMove(0, 1, 'X')"></div>
-                <div class="cell" onclick="makeMove(0, 2, 'X')"></div>
-                <div class="cell" onclick="makeMove(1, 0, 'X')"></div>
-                <div class="cell" onclick="makeMove(1, 1, 'X')"></div>
-                <div class="cell" onclick="makeMove(1, 2, 'X')"></div>
-                <div class="cell" onclick="makeMove(2, 0, 'X')"></div>
-                <div class="cell" onclick="makeMove(2, 1, 'X')"></div>
-                <div class="cell" onclick="makeMove(2, 2, 'X')"></div>
+                    <div class="board" id="board">
+                        <div class="cell" onclick="makeMove(0, 0, 'X')"></div>
+                        <div class="cell" onclick="makeMove(0, 1, 'X')"></div>
+                        <div class="cell" onclick="makeMove(0, 2, 'X')"></div>
+                        <div class="cell" onclick="makeMove(1, 0, 'X')"></div>
+                        <div class="cell" onclick="makeMove(1, 1, 'X')"></div>
+                        <div class="cell" onclick="makeMove(1, 2, 'X')"></div>
+                        <div class="cell" onclick="makeMove(2, 0, 'X')"></div>
+                        <div class="cell" onclick="makeMove(2, 1, 'X')"></div>
+                        <div class="cell" onclick="makeMove(2, 2, 'X')"></div>
+                    </div>
+
+                    <p id="result"></p>
+                    <button onclick="resetGame()">Restart Game</button>
+                </div>
+
+                <div class="game-sidebar">
+                    <div class="score-section">
+                        <div class="score-card" id="pscore">
+                            <h2>YOU</h2>
+                            <div class="score-value">0</div>
+                        </div>
+                        <div class="score-card" id="ascore">
+                            <h2>AI</h2>
+                            <div class="score-value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="points-info">
+                        <h3>Scoring</h3>
+                        <ul>
+                            <li>Win = 2</li>
+                            <li>Tie = 1</li>
+                            <li>Loss = 0</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <ul>
-        <li>Win = 2points</li>
-        <li>Tie = 1point</li>
-        <li>Loss = 0 points</li>
-    </ul>
-    <h2 id="pscore">YOU: </h2>
-    <h2 id="ascore">AI: </h2>
-       
-    <p id="result"></p>
-    <button onclick="resetGame()">Restart</button>
-        
+
+    <footer class="footer-container white-text-container text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col">        
+                    <p class="text-secondary mb-0">&copy; Senor Fetty <a class="text-light fw-bold" href="#"><span id="currentYear"></span></a>. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <audio id="bg-music" src="game.wav"></audio>
     <audio id="popsound" src="popo.wav"></audio>    
     <audio id="clap" src="clap.wav"></audio>
     
-
-    <footer class="footer-container white-text-container text-center">
-        <div class="container" >
-          <div class="row">
-            <div class="col">        
-              <p  class="text-secondary mb-0">&copy;Senor Fetty <a class="text-light fw-bold" href="#"><span id="currentYear"></span></a>.  All Rights Reserved.</p>
-            </div>
-        </div>
-      </footer>
+    <div id="confetti-container"></div>
     <script src="game.js"></script>
-
-    <div id="balloon-container"></div>
 </body>
 </html>

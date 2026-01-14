@@ -10,6 +10,7 @@ let gameActive = true;
 let difficulty = 'easy';
 let pScore= 0
 let aScore= 0
+let playerStartsNext = false; // Track who starts next game (alternates)
 
 
 function popo() {
@@ -19,6 +20,7 @@ function popo() {
 function clap() {
     document.getElementById('clap').play()
 }
+
 function makeMove(row, col, symbol) {
     if (!gameActive || board[row][col] !== '' || (symbol === 'X' && !playerTurn) || (symbol === 'O' && playerTurn)) {
         return;
@@ -30,7 +32,7 @@ function makeMove(row, col, symbol) {
 
     if (checkWin()) {
         clap();
-        popBalloon(10);
+        createConfetti();
         highlightWin();
         document.getElementById('result').innerHTML = `Player ${symbol} wins!`;
         gameActive = false;
@@ -53,6 +55,7 @@ function makeMove(row, col, symbol) {
     } else {
         popo();
         playerTurn = !playerTurn; 
+        updateTurnIndicator();
 
         if (!playerTurn) {
             setTimeout (() => {
@@ -101,7 +104,9 @@ function resetGame() {
         ['', '', ''],
     ];
 
-    playerTurn = false;
+    // Alternate who starts
+    playerStartsNext = !playerStartsNext;
+    playerTurn = playerStartsNext;
     gameActive = true;
 
     const cells= document.querySelectorAll('.cell');
@@ -113,10 +118,14 @@ function resetGame() {
     document.getElementById('result').innerHTML = '';
     document.getElementById('result').classList.remove('show');
 
-    const rR = Math.floor(Math.random() * 3);
-    const rC = Math.floor(Math.random() * 3);
+    updateTurnIndicator();
 
-    makeMove(rR,rC, 'O');
+    // If AI starts, make a move
+    if (!playerTurn) {
+        const rR = Math.floor(Math.random() * 3);
+        const rC = Math.floor(Math.random() * 3);
+        makeMove(rR, rC, 'O');
+    }
 }
 
 
@@ -131,38 +140,41 @@ function playbgmusic() {
 document.addEventListener('click', playbgmusic);
 
 
-function popBalloon(numBalloons) {
-    for (i = 0;i < numBalloons; i++) {
+function createConfetti() {
+    const confettiColors = ['#667eea', '#764ba2', '#11998e', '#38ef7d', '#ffeaa7', '#fdcb6e', '#ffffff', '#2d2d2d'];
+    const confettiCount = 150;
+    const container = document.getElementById('confetti-container');
+    
+    if (!container) return; // Safety check
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
         
-        const balloon = document.createElement('div');
-        balloon.classList.add('balloon');
-
-        const balloonColor = getRandomColor();
-        balloon.style.backgroundColor = balloonColor;
-  
-        const xPosition = Math.floor(Math.random() * window.innerWidth);
-        const yPosition = window.innerHeight;
-
-        balloon.style.left = `${xPosition}px`;
-        balloon.style.top = `${yPosition}px`;
-
+        // Random properties
+        const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        const size = Math.random() * 6 + 6; // 6-12px
+        const xPosition = Math.random() * window.innerWidth;
+        const delay = Math.random() * 0.5;
+        const duration = Math.random() * 2 + 3; // 3-5 seconds
         
-        document.getElementById('balloon-container').appendChild(balloon);
-
+        // Set styles
+        confetti.style.backgroundColor = color;
+        confetti.style.left = `${xPosition}px`;
+        confetti.style.width = `${size}px`;
+        confetti.style.height = `${size}px`;
+        confetti.style.animationDelay = `${delay}s`;
+        confetti.style.animationDuration = `${duration}s`;
+        
+        container.appendChild(confetti);
+        
+        // Remove after animation
         setTimeout(() => {
-            balloon.remove();
-        }, 6000);
+            if (confetti.parentNode) {
+                confetti.remove();
+            }
+        }, (duration + delay) * 1000);
     }
-}
-
-
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
 }
 
 function makeAIMove() {
@@ -261,8 +273,8 @@ function minimax(board, depth, isMaximizing) {
 
 function updateScores() {
     requestAnimationFrame (() => {
-        document.getElementById('pscore').innerHTML = `YOU: ${pScore}`;
-        document.getElementById('ascore').innerHTML = `AI: ${aScore}`;
+        document.getElementById('pscore').querySelector('.score-value').innerHTML = pScore;
+        document.getElementById('ascore').querySelector('.score-value').innerHTML = aScore;
     });
     
 }
@@ -272,15 +284,31 @@ document.getElementById('currentYear').innerHTML = new Date().getFullYear()
 
 
 function startGame() {
-    playerTurn= false;
+    // First game: AI starts (playerStartsNext starts as false)
+    playerTurn = playerStartsNext;
+    gameActive = true;
 
-    const rR = Math.floor(Math.random() * 3);
-    const rC = Math.floor(Math.random() * 3);
+    updateTurnIndicator();
 
-    const diff = document.querySelector('input[name="difficulty"]:checked').value;
+    // If AI starts, make a move
+    if (!playerTurn) {
+        const rR = Math.floor(Math.random() * 3);
+        const rC = Math.floor(Math.random() * 3);
+        makeMove(rR, rC, 'O');
+    }
+}
 
-
-    makeMove(rR,rC, 'O', diff);
+function updateTurnIndicator() {
+    const indicator = document.getElementById('turn-indicator');
+    if (indicator) {
+        if (playerTurn) {
+            indicator.innerHTML = 'Your Turn';
+            indicator.className = 'turn-indicator player-turn';
+        } else {
+            indicator.innerHTML = "AI's Turn";
+            indicator.className = 'turn-indicator ai-turn';
+        }
+    }
 }
 
 startGame();
